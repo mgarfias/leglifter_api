@@ -38,7 +38,7 @@ app.config['SECRET_KEY'] = 'super-secret'
 
 
 jwt = JWT(app, authenticate, identity)
-from app import bodies,dogs, models
+from app import bodies, models
 
 @app.route('/protected')
 @jwt_required()

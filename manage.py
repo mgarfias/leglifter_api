@@ -1,10 +1,16 @@
 # manage.py
 
-from flask.ext.script import Manager
+from flask.ext.script import Shell,Server,Manager
 from flask import url_for
-from app import app
+from app import app, models
+from app.models import db
+
+def _make_context():
+    return dict(app=app, db=db, models=models)
+
 
 manager = Manager(app)
+manager.add_command("runserver", Server())
 
 @manager.command
 def hello():

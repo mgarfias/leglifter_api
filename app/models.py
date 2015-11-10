@@ -48,45 +48,45 @@ class CommonColumns(db.Model):
 #    def __repr__(self):
 #        return '<User %r>' % (self.nickname)
 
-class Bodies(CommonColumns):
-    __tablename__ = 'bodies'
+class Body(db.Model):
+    __tablename__ = 'body'
     id = db.Column(Integer, primary_key=True, autoincrement=True)
     name = db.Column(db.String(64), index=True, unique=True)
     abrv = db.Column(db.String(64), index=True, unique=False)
     url  = db.Column(db.String(64), index=True, unique=False)
 
-class Clearances(CommonColumns):
-    __tablename__ = 'clearances'
-    id = db.Column(Integer, primary_key=True, autoincrement=True)
-    body_id = db.Column(Integer, ForeignKey('bodies.id',use_alter=True,name="bodies_fk"))
-    body = relationship(Bodies, uselist=False,post_update=True)
-    test = db.Column(String)
-    info = db.Column(String)
+# class Clearances(CommonColumns):
+#     __tablename__ = 'clearances'
+#     id = db.Column(Integer, primary_key=True, autoincrement=True)
+#     body_id = db.Column(Integer, ForeignKey('body.id',use_alter=True,name="body_fk"))
+#     body = relationship(Body, uselist=False,post_update=True)
+#     test = db.Column(String)
+#     info = db.Column(String)
+#
+# class DogClearance(CommonColumns):
+#     __tablename__ = 'dog_clearances'
+#     dog_id = db.Column(Integer, ForeignKey('dogs.id',use_alter=True,name="dogs_fk"),primary_key=True)
+#     clearance_id = db.Column(Integer, ForeignKey('clearances.id',use_alter=True,name="clearance_fk"),primary_key=True)
+#
+# class DogTitles(CommonColumns):
+#     __tablename__ = 'dog_titles'
+#     id = Column(Integer, primary_key=True, autoincrement=True)
+#     dog_id = Column(Integer, ForeignKey('dogs.id',use_alter=True,name="dogs_fk"),primary_key=True)
+#     title_id = Column(Integer, ForeignKey('titles.id',use_alter=True,name="titles_fk"),primary_key=True)
 
-class DogClearance(CommonColumns):
-    __tablename__ = 'dog_clearances'
-    dog_id = db.Column(Integer, ForeignKey('dogs.id',use_alter=True,name="dogs_fk"),primary_key=True)
-    clearance_id = db.Column(Integer, ForeignKey('clearances.id',use_alter=True,name="clearance_fk"),primary_key=True)
-
-class DogTitles(CommonColumns):
-    __tablename__ = 'dog_titles'
-    id = Column(Integer, primary_key=True, autoincrement=True)
-    dog_id = Column(Integer, ForeignKey('dogs.id',use_alter=True,name="dogs_fk"),primary_key=True)
-    title_id = Column(Integer, ForeignKey('titles.id',use_alter=True,name="titles_fk"),primary_key=True)
-
-class Dogs(CommonColumns):
-    __tablename__ = 'dogs'
-    id = Column(Integer, primary_key=True, autoincrement=True)
-    altered = Column(Boolean)
-    clearances = relationship("Clearances", secondary="dog_clearances", backref="dogs")
-    dam_id = Column(Integer, ForeignKey('dogs.id',use_alter=True,name="dams_fk"))
-    date_of_birth = Column(Date)
-    desc = Column(String)
-    registered_name = Column(String)
-    registrations = relationship("Registrations", secondary="dog_registrations", backref="dogs")
-    sex = Column('sexes',Enum("male", "female",name="sexes"))
-    sire_id = Column(Integer, ForeignKey('dogs.id',use_alter=True,name="sire_fk"))
-    titles = relationship("Titles", secondary="dog_titles", backref="dogs")
-    thumbnail = Column(String)
-    dam = relationship('Dogs', primaryjoin = ('Dogs.dam_id == Dogs.id'),lazy="joined",post_update=True)
-    sire = relationship('Dogs', primaryjoin = ('Dogs.sire_id == Dogs.id'),lazy="joined",post_update=True)
+# class Dogs(CommonColumns):
+#     __tablename__ = 'dogs'
+#     id = Column(Integer, primary_key=True, autoincrement=True)
+#     altered = Column(Boolean)
+#     clearances = relationship("Clearances", secondary="dog_clearances", backref="dogs")
+#     dam_id = Column(Integer, ForeignKey('dogs.id',use_alter=True,name="dams_fk"))
+#     date_of_birth = Column(Date)
+#     desc = Column(String)
+#     registered_name = Column(String)
+#     registrations = relationship("Registrations", secondary="dog_registrations", backref="dogs")
+#     sex = Column('sexes',Enum("male", "female",name="sexes"))
+#     sire_id = Column(Integer, ForeignKey('dogs.id',use_alter=True,name="sire_fk"))
+#     titles = relationship("Titles", secondary="dog_titles", backref="dogs")
+#     thumbnail = Column(String)
+#     dam = relationship('Dogs', primaryjoin = ('Dogs.dam_id == Dogs.id'),lazy="joined",post_update=True)
+#     sire = relationship('Dogs', primaryjoin = ('Dogs.sire_id == Dogs.id'),lazy="joined",post_update=True)
