@@ -48,7 +48,7 @@ class CommonColumns(db.Model):
 #    def __repr__(self):
 #        return '<User %r>' % (self.nickname)
 
-class Body(db.Model):
+class Body(CommonColumns):
     __tablename__ = 'body'
     id = db.Column(Integer, primary_key=True, autoincrement=True)
     name = db.Column(db.String(64), index=True, unique=True)
